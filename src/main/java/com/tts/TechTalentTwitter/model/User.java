@@ -27,7 +27,8 @@ import javax.persistence.ManyToMany;
 @NoArgsConstructor
 @Entity
 public class User {
-
+  /*Represents the User table for the H2 Database*/
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "user_id")
