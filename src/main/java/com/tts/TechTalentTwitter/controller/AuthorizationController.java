@@ -43,5 +43,5 @@ public class AuthorizationController {
         }
         return "registration";
     }
-
+    
 }
