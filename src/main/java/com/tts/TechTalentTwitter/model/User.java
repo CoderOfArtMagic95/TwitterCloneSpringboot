@@ -38,6 +38,9 @@ public class User {
 	private String password;
 	private String firstName;
 	private String lastName;
+	/* To do this, we already created a variable
+	 * called active, which indicates whether or
+	 * not the user is enabled.*/
 	private int active;
 
 	@CreationTimestamp 
