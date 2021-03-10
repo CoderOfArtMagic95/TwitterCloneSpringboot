@@ -30,9 +30,16 @@ public class TweetController {
     /* The first will allow us to get all tweets,
      *  and will accept a GET request to either /tweets or /. */
     @GetMapping(value= {"/tweets", "/"})
-    public String getFeed(Model model){
+    public String getFeed(Model model,boolean IsEmpty){
         List<Tweet> tweets = tweetService.findAll();
+        /* allow us to check for 'feed' if it is empty, 
+         * newTweet.html */
+        if(IsEmpty == true && model.equals(null)) {
+        	model.addAttribute("emptyMessage", "Tweet feed is empty!");
+        }
         model.addAttribute("tweetList", tweets);
+        getFeed(model, IsEmpty);
+        
         return "feed";
     }
     /* allow us to serve up the 'new tweet' page, 
@@ -42,6 +49,8 @@ public class TweetController {
         model.addAttribute("tweet", new Tweet());
         return "newTweet";
     }
+    
+   
     /*This method handles the form submission from the 'new tweet' page. 
      * This method gets the logged in user and associates them with the tweet */
     @PostMapping(value = "/tweets")
