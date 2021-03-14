@@ -22,14 +22,18 @@
         </div>
         <div id="navbar">
     <ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
-        <li><a href="file:///C:/Users/Artac/OneDrive/Desktop/TechTalentSouth/Springboot%20Projects/TechTalentTwitter/src/main/resources/templates/feed.html">Home</a></li>
-        <li><a href="file:///C:/Users/Artac/OneDrive/Desktop/TechTalentSouth/Springboot%20Projects/TechTalentTwitter/src/main/resources/templates/newTweet.html">New Tweet</a></li>
+        <li><a href="feed.html">Home</a></li>
+        <li><a href="newTweet.html">New Tweet</a></li>
     </ul>
      <ul class="nav navbar-nav navbar-right">
     <li sec:authorize="isAuthenticated()"><a style="pointer-events: none;color: #00aced">
       @<span sec:authentication="name"></span></a>
     <li sec:authorize="isAuthenticated()"><a href="../logout">Logout</a></li>
-    <li sec:authorize="!isAuthenticated()"><a href="file:///C:/Users/Artac/OneDrive/Desktop/TechTalentSouth/Springboot%20Projects/TechTalentTwitter/src/main/resources/templates/login.html">Login</a></li>
+    
+     <li class="dropdown-item-text" sec:authorize="!isAuthenticated()"><a href="login.html">Login</a></li>
+    <li><a class="dropdown-item" sec:authorize="!isAuthenticated()"
+  href="signUp_mini.html">Sign Up</a></li>
+    
  </ul>
  </div>
 </div>
