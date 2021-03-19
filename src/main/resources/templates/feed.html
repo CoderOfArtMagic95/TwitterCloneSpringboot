@@ -41,13 +41,20 @@
     <!-- NAvigation bar stuff above-->
 <!-- shows the current feed in Twitter -->
     <div class="container">
-        <h2>Tweets</h2>
+       <!--  <h2>Tweets</h2>
         <div th:each="tweet:${tweetList}">
             <h5>@<span th:text="${tweet.user.username}"></span>
             <small><span th:text="${#dates.format(tweet.createdAt, 'M/d/yy')}"></span></small></h5>
           
-             <h3><div th:if="$emptyMessage" th:utext="${emptyMessage}">Empty Feed</div></h3>
-    	</div>
+           <!-- <h3><div th:if="$emptyMessage" th:utext="${emptyMessage}">Empty Feed</div></h3> 
+    	</div> -->
+    	<div th:if="${not #lists.isEmpty(tweetList)}">
+	<h3>Tweets</h3>
+</div>
+<div th:if="${#lists.isEmpty(tweetList)}">
+	<h3>No Tweets</h3>
+</div>
+    	
     </div>
 </body>
 </html>

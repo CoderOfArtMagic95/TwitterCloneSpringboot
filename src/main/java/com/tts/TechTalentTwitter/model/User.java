@@ -1,6 +1,7 @@
 package com.tts.TechTalentTwitter.model;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -70,4 +71,16 @@ public class User {
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), 
 	    inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
+	
+	/*Many to Many relationship*/
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "user_follower", joinColumns = @JoinColumn(name = "user_id"), 
+	    inverseJoinColumns = @JoinColumn(name = "follower_id"))
+	private List<User> followers;
+	
+	/* to be able to easily get a list of
+	 *  the users that a particular user is following*/
+	@ManyToMany(mappedBy="followers")
+	private List<User> following;
+	
 }
