@@ -61,7 +61,7 @@ public class User {
 	/* To do this, we already created a variable
 	 * called active, which indicates whether or
 	 * not the user is enabled.*/
-	private int active;
+	private boolean active;
 
 	@CreationTimestamp 
 	private Date createdAt;
