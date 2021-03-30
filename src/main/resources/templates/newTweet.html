@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>new Tweet</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <link rel="stylesheet" href="/custom.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/custom.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div th:replace="fragments/navbar"></div>
+    <nav class="row navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#" style="color: #00aced">
+                <i class="fab fa-twitter"></i> Tech Talent Twitter</a>
+        </div>
+        <div id="navbar">
+   <ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
+        <li><a href="feed.html">Home</a></li>
+        <li><a href="newTweet.html">New Tweet</a></li>
+    </ul>
+     <ul class="nav navbar-nav navbar-right">
+    <li sec:authorize="isAuthenticated()"><a style="pointer-events: none;color: #00aced">
+      @<span sec:authentication="name"></span></a>
+    <li sec:authorize="isAuthenticated()"><a href="../logout">Logout</a></li>  
+    <li class="dropdown-item-text" sec:authorize="!isAuthenticated()"><a href="login.html">Login</a></li>
+    <li><a class="dropdown-item" sec:authorize="!isAuthenticated()"
+  href="signUp_mini.html">Sign Up</a></li>
+    
+    
+ </div>
+</div>
+</nav>
+    <!-- NAvigation bar stuff above-->
+<!-- shows the current feed in Twitter -->
+    <div class="container">
+        <h2>Tweets</h2>
+        <div th:each="tweet:${tweetList}">
+            <h5>@<span th:text="${tweet.user.username}"></span>
+            <small><span th:text="${#dates.format(tweet.createdAt, 'M/d/yy')}"></span></small></h5>
+          
+             <div th:if="${emptyMessage}">
+             <p><span th:utext="${emptyMessage}"></span></p>
+          </div> 
+    	</div>
+    </div>
+</body>
+</html>
