@@ -4,13 +4,14 @@ import java.util.List;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+//import lombok.AllArgsConstructor;
+//import lombok.Builder;
+//import lombok.Data;
+//import lombok.NoArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.tts.TechTalentTwitter.model.Role;
@@ -18,6 +19,7 @@ import com.tts.TechTalentTwitter.model.User;
 import com.tts.TechTalentTwitter.repository.RoleRepository;
 import com.tts.TechTalentTwitter.repository.UserRepository;
 
+@Service
 public class UserService {
 /*  This class in the service package is used to add
  *  some additional functionality on top of the repositories,
@@ -52,7 +54,7 @@ public class UserService {
     /*performs password hashing for security reasons*/
     public User saveNewUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setActive(true);
+        user.setActive(true);// changed to boolean instead of integer
         Role userRole = roleRepository.findByRole("USER");
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         return userRepository.save(user);

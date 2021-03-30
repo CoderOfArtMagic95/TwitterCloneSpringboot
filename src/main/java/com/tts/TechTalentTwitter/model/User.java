@@ -11,6 +11,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
@@ -19,20 +23,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 /*Represents the User table for the H2 Database*/
-
+@Entity
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 public class User {
 
 	
@@ -67,6 +67,7 @@ public class User {
 	private Date createdAt;
 	
 	/*Add a Many-to-Many relationship with roles*/
+	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), 
 	    inverseJoinColumns = @JoinColumn(name = "role_id"))
