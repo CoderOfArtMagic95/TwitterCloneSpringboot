@@ -31,6 +31,7 @@ public class FollowController {
         /*  get all of the userToFollow's current followers,
          *  add the currently logged in user to the list, 
          *  and then reassign the updated list to userToFollow.*/
+        //checks to make sure we don't follow the same user twice
         List<User> followers = userToFollow.getFollowers();
         followers.add(loggedInUser);
         userToFollow.setFollowers(followers);

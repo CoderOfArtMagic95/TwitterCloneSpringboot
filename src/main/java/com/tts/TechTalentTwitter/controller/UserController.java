@@ -38,6 +38,8 @@ public class UserController {
     //add more code here
     @GetMapping(value = "/users/{username}")
     public String getUser(@PathVariable(value="username") String username, Model model) {	
+    	
+      User loggedInUser = userService.getLoggedInUser();
       User user = userService.findByUsername(username);
       List<Tweet> tweets = tweetService.findAllByUser(user);
       /* In the UserController's getUser method, 
@@ -45,7 +47,6 @@ public class UserController {
        *  list of users that are being followed by
        *  the currently logged in user to see if the
        *  user whose profile we are viewing is one of them.*/
-       User loggedInUser = userService.getLoggedInUser();
        List<User> following = loggedInUser.getFollowing();
        boolean isFollowing = false;
        for (User followedUser : following) {
@@ -53,6 +54,11 @@ public class UserController {
                isFollowing = true;
            }
        }
+       /* to generate a boolean that indicates whether the profile page
+        * that is being returned belongs to the currently logged in user.*/
+       boolean isSelfPage = loggedInUser.getUsername().equals(username);
+       model.addAttribute("isSelfPage", isSelfPage);
+       
        model.addAttribute("following", isFollowing);
        model.addAttribute("tweetList", tweets);
        model.addAttribute("user", user);
