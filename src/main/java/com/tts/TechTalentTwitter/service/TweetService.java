@@ -19,10 +19,15 @@ public class TweetService {
 
     @Autowired
     private TweetRepository tweetRepository;
+    
+    @Autowired
+    private TagRepository tagRepository;
+    
     //finds all tweets
     public List<Tweet> findAll() {
         List<Tweet> tweets = tweetRepository.findAllByOrderByCreatedAtDesc();
-        return formatTweets(tweets);
+        return tweets;
+        //return formatTweets(tweets);
     }
 	//finds all tweets made by specific one user with User class object user
     public List<Tweet> findAllByUser(User user) {
@@ -38,6 +43,12 @@ public class TweetService {
     public void save(Tweet tweet) {
     	handleTags(tweet);
         tweetRepository.save(tweet);
+    }
+    
+    public List<Tweet> findAllWithTag(String tag){
+        List<Tweet> tweets = tweetRepository.findByTags_PhraseOrderByCreatedAtDesc(tag);
+        return tweets;
+        //return formatTweets(tweets);
     }
     
     private void handleTags(Tweet tweet) {
