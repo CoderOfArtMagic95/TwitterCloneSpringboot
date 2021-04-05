@@ -38,23 +38,13 @@
     <!-- NAvigation bar stuff above-->
 <!-- gets the username and password during login process -->
     <div class="container">
-        <h2>Welcome!</h2> 
-        <form th:action="@{/login}" method="post"><br/>
-           <!--  <input type="text" id="username" name="username" th:placeholder="Username" class="form-control"/> <br/>
-            <input type="password" th:placeholder="Password" id="password" name="password" class="form-control"/> <br/> -->
-            
-             <div class="form-group">
-                <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="validation-message"></label>
-                <input type="text" th:field="*{username}" placeholder="Username" class="form-control"/>
-            </div>
-           
-            <div class="form-group">
-                <input type="password" th:field="*{password}" placeholder="Password" class="form-control"/> 
-                <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message"></label>
-            </div>
-            
+        <h2>Goodbye!</h2> 
+        <form th:action="@{/logout}" method="post"><br/>
+          <div align="center" th:if="${#param.error}">
+                <h4 style="color: green">You are now Logged out.</h4>
+                 <h4 style="color: green">Click to the Log in button to go to login page.</h4>
+            </div><form th:action="@{/signup}" method="post"><br/>
             <button class="btn btn-md btn-success btn-block" name="Submit" value="Login" type="Submit" href="feed.html">Log in</button> 
         </form>
-    </div>
 </body>
 </html>
