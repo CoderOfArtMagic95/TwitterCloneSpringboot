@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="ISO-8859-1">
-    <title>Unsuccessful Sign Up</title>
+    <title>Log in</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
     <link rel="stylesheet" href="/custom.css">
@@ -28,50 +28,37 @@
      <ul class="nav navbar-nav navbar-right">
     <li sec:authorize="isAuthenticated()"><a style="pointer-events: none;color: #00aced">
       @<span sec:authentication="name"></span></a>
-    <li sec:authorize="isAuthenticated()"><a href="../logout">Logout</a></li>
-    
-     <li class="dropdown-item-text" sec:authorize="!isAuthenticated()"><a href="login.html">Login</a></li>
     <li><a class="dropdown-item" sec:authorize="!isAuthenticated()"
-  href="signUp_mini.html">Sign Up</a></li>
-    
+  href="fragments/signUp_mini.html">Sign Up</a></li>
+   
  </ul>
  </div>
 </div>
 </nav>
     <!-- NAvigation bar stuff above-->
-        <h2>Sign up</h2>		
-        <form th:action="@{/signup}" th:object="${user}" method="post" autocomplete="off" >
-            <div class="form-group">
-                <label th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="validation-message"></label>
-                <input type="text" th:field="*{firstName}" placeholder="First Name" class="form-control"/>
-            </div>
-            <div class="form-group">
-                <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="validation-message"></label>
-                <input type="text" th:field="*{lastName}" placeholder="Last Name" class="form-control"/>
-            </div>
-            <div class="form-group">
+<!-- gets the username and password during login process -->
+    <div class="container">
+        <h2>Welcome!</h2> 
+        <form th:action="@{/login}" method="post"><br/>
+           <!--  <input type="text" id="username" name="username" th:placeholder="Username" class="form-control"/> <br/>
+            <input type="password" th:placeholder="Password" id="password" name="password" class="form-control"/> <br/> -->
+            
+             <div class="form-group">
                 <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="validation-message"></label>
                 <input type="text" th:field="*{username}" placeholder="Username" class="form-control"/>
             </div>
-            <div class="form-group"> 
-                <input type="text" th:field="*{email}" placeholder="Email" class="form-control"/> 
-                <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="validation-message"></label>
-            </div>
+           
             <div class="form-group">
                 <input type="password" th:field="*{password}" placeholder="Password" class="form-control"/> 
                 <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message"></label>
             </div>
             
-            <div class="form-group">
-                <button class="btn btn-md btn-success btn-block" name="Submit" value="Submit" type="Submit" th:text="Submit"
-                th:if="${#fields.hasErrors('user')}" class="validation-message" th:errors="*{user}" >Submit</button>
-            </div>
-            
+            <button class="btn btn-md btn-success btn-block" name="Submit" value="Login" type="Submit" href="feed.html">Log in</button> 
         </form>
         
-         <div align="center" th:if="${param.error}">
-                <h4 style="color: red">Sign Up Unsuccessful.</h4>
-            </div>
+        <div align="center" th:if="${param.error}">
+                <h4 style="color: red">Login unsuccessful.</h4>
+            </div>     
     </div>
- </body>
+</body>
 </html>
