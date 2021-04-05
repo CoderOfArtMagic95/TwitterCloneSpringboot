@@ -2,19 +2,45 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>User</title>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <link rel="stylesheet" href="/custom.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/custom.js"></script>
 </head>
 <body>
 <!-- nav bar -->
-<div th:replace="fragments/navbar"></div>
-<!-- User profile page begins -->
-<h2>Profile for <span th:text="${user.firstName}"></span> 
-<span th:text="${user.lastName}"></span> - <span style="color: #00aced">
-@<span th:text="${user.username}"></span></span></h2>
-<!-- add more code here -->
-<h5>Joined <span th:text="${#dates.format(user.createdAt, 'MMMM dd, yyyy')}"></span></h5>
 
-<h3>Tweets</h3>	
+ <div class="container">
+        <div th:replace="fragments/navbar"></div>
+    <nav class="row navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="navbar.html" style="color: #00aced">
+                <i class="fab fa-twitter"></i> Tech Talent Twitter</a>
+     
+                        <div id="navbar">
+                            <ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
+                                <li><a href="feed.html">Home</a></li>
+                                <li><a href="newTweet.html">New Tweet</a></li>
+                             </ul>
+                       <ul class="nav navbar-nav navbar-right">
+                           <li sec:authorize="isAuthenticated()"><a style="pointer-events: none;color: #00aced">
+                                @<span sec:authentication="name"></span></a>
+                           <li sec:authorize="isAuthenticated()"><a href="../logout">Logout</a></li>
+  
+                           <li class="dropdown-item-text" sec:authorize="!isAuthenticated()"><a href="login.html">Login</a></li>
+                          <li><a class="dropdown-item" sec:authorize="!isAuthenticated()"
+                                href="signUp_mini.html">Sign Up</a></li>
+  
+                       </ul>
+                   </div>
+                </div>
+             </div>
+          </nav>
+      </div>
 <!-- below groups the tweets in the structure where it
      prints the:
          
@@ -23,30 +49,46 @@
          tweet
          
          -->
-    <div class="list-group" th:each="tweet:${tweetList}">
-        <div class="list-group-item list-group-item-action">
-            <div class="d-flex w-100 justify-content-between">
-                <h5>@<span th:text="${tweet.user.username}"></span>
-                <smal><span th:text="${#dates.format(tweet.createdAt, 'M/d/yy')}"></small></h5>
-            </div>
-    		<p class="mb-1" th:utext="${tweet.message}"></p>
-        </div>
-    </div>
-    <!-- Prints no tweets -->
-    <div th:if="${not #lists.isEmpty(tweetList)}">
-	<h3>Tweets</h3>
-</div>
-<div th:if="${#lists.isEmpty(tweetList)}">
-	<h3>No Recent Tweets</h3>
-</div>
-    <!-- This follow/unfollow functionality will be 
-    utilized by pressing a button, which lives inside
-     a form and makes a POST request to one of the two endpoints. -->
-     <form th:action="@{/follow/} + ${user.username}" th:if="${!following}" method="post">
-    <button style="float:right" type="Submit" class="btn btn-lg btn-success">Follow</button>
-</form>
-<form th:action="@{/unfollow/} + ${user.username}" th:if="${following}" method="post">
-    <button style="float:right" type="Submit" class="btn btn-lg btn-primary unfollow_btn">Following</button>
-</form>
+  <div class="list-group" th:each="user:${users}">
+            <!-- For each user, we'll show their first name, last name, username, and tweet count.  -->
+               <a th:href="@{/users/} + ${user.username}" class="list-group-item list-group-item-action">
+                 <div class="row">
+                   <div class="col col-sm-6">
+                   <div th:replace="fragments/navbar"></div>
+                   
+                      <h5 class="mb-1" style="color: #00aced"><i class="fab fa-twitter"></i> @<span th:text="${user.username}"></span></h5>	
+                   
+                      <h5 class="mb-1"><span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span>
+                   
+                      <span th:if="${!followingStatus.containsKey(user.username)}">(Me)</span></h5>
+                   
+                     <h5>Joined <span th:text="${#dates.format(user.createdAt, 'MMMM dd, yyyy')}"></span></h5>
+                   </div>
+                 
+                  <div class="col col-sm-2 col-sm-offset-4 text-right">
+                  
+                    <h5 class="mb-1"><span th:text="${tweetCounts.get(user.username)}"></span> tweets</h5>
+                     <div th:if="${not #lists.isEmpty(tweetList)}"></div>
+                        <div th:if="${#lists.isEmpty(tweetList)}">
+	                                <h3>No Recent Tweets</h3>
+                             </div>
+                      <form th:action="@{/follow/} + ${user.username}" th:if="${followingStatus.containsKey(user.username) 
+				       && !followingStatus.get(user.username)}" method="post">
+				
+				         <button style="float:right" type="Submit" class="btn btn-md btn-success">Follow</button>
+				
+				   </form>
+				
+				   <form th:action="@{/unfollow/} + ${user.username}" th:if="${followingStatus.containsKey(user.username) 
+				         && followingStatus.get(user.username)}" method="post">
+				
+				       <button style="float:right" type="Submit" class="btn btn-md btn-primary unfollow_btn">Following</button>
+				
+				   </form>
+                  
+                  </div>
+               </div>
+              </a>
+           </div>
 </body>
 </html>
