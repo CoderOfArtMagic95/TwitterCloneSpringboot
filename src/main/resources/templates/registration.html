@@ -63,9 +63,9 @@
             </div>
             <div class="form-group">
                 <button class="btn btn-md btn-success btn-block" name="Submit" value="Submit" type="Submit" th:text="Submit"
-                th:if="${#fields.hasErrors('user')}" class="validation-message" th:errors="*{user} $(#fields).closest().hide()" >Submit</button>
+                th:if="${#fields.hasErrors('user')}" class="validation-message" th:errors="*{user}" >Submit</button>
             </div>
-        </form>
+        </form th:action="@{/signup}" th:object="${user}" th:if="${form.userExists(user.userName)}" method="hide">
     </div>
  </body>
 </html>

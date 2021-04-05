@@ -17,39 +17,46 @@
     <nav class="row navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#" style="color: #00aced">
+            <a class="navbar-brand" href="navbar.html" style="color: #00aced">
                 <i class="fab fa-twitter"></i> Tech Talent Twitter</a>
-        </div>
-        <div id="navbar">
-   <ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
-        <li><a href="feed.html">Home</a></li>
-        <li><a href="newTweet.html">New Tweet</a></li>
-    </ul>
-     <ul class="nav navbar-nav navbar-right">
-    <li sec:authorize="isAuthenticated()"><a style="pointer-events: none;color: #00aced">
-      @<span sec:authentication="name"></span></a>
-    <li sec:authorize="isAuthenticated()"><a href="../logout">Logout</a></li>
+     
+                        <div id="navbar">
+                            <ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
+                                <li><a href="feed.html">Home</a></li>
+                                <li><a href="newTweet.html">New Tweet</a></li>
+                             </ul>
+                       <ul class="nav navbar-nav navbar-right">
+                           <li sec:authorize="isAuthenticated()"><a style="pointer-events: none;color: #00aced">
+                                @<span sec:authentication="name"></span></a>
+                           <li sec:authorize="isAuthenticated()"><a href="../logout">Logout</a></li>
   
-   <li class="dropdown-item-text" sec:authorize="!isAuthenticated()"><a href="login.html">Login</a></li>
-    <li><a class="dropdown-item" sec:authorize="!isAuthenticated()"
-  href="signUp_mini.html">Sign Up</a></li>
+                           <li class="dropdown-item-text" sec:authorize="!isAuthenticated()"><a href="login.html">Login</a></li>
+                          <li><a class="dropdown-item" sec:authorize="!isAuthenticated()"
+                                href="signUp_mini.html">Sign Up</a></li>
   
- </ul>
- </div>
-</div>
-</nav>
+                       </ul>
+                   </div>
+                </div>
+             </div>
+          </nav>
+      </div>
     <!-- NAvigation bar stuff above-->
 <!-- shows the current feed in Twitter -->
-    <div class="container">
-       <!--  <h2>Tweets</h2>
+    <div class="container"> 
+      <a href="header.html" style="color: #00aced"></a>
+       <h2>Tweets</h2>
         <div th:each="tweet:${tweetList}">
             <h5>@<span th:text="${tweet.user.username}"></span>
             <small><span th:text="${#dates.format(tweet.createdAt, 'M/d/yy')}"></span></small></h5>
           
-           <!-- <h3><div th:if="$emptyMessage" th:utext="${emptyMessage}">Empty Feed</div></h3> 
-    	</div> -->
+          <h3><div th:if="${getFeed.isEmpty(tweetList)}" th:utext="${emptyMessage}">Empty Feed</div></h3> 
+    	</div> 
     	<div th:if="${not #lists.isEmpty(tweetList)}">
-	<h3>Tweets</h3>
+	<!-- <h3>Tweets</h3> -->
+	 <form th:action="@{/tweets/} + ${user.username}" th:if="${followingStatus.containsKey(user.username) 
+				         && followingStatus.get(user.username)}" method="post">
+	        <h5 class="mb-1"><span th:text="${tweetCounts.get(user.username)}"></span> tweets</h5>  
+      </form>
 </div>
 <div th:if="${#lists.isEmpty(tweetList)}">
 	<h3>No Tweets</h3>
