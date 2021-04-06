@@ -86,6 +86,13 @@
         <version>4.0.1.Final</version>
     </dependency>
     
+    <!-- will allow us to use some functions to easily format our timestamps -->
+    <dependency>
+   <groupId>org.ocpsoft.prettytime</groupId>
+   <artifactId>prettytime</artifactId>
+   <version>5.0.0.Final</version>
+</dependency>
+    
 </dependencies>
 
 	<build>

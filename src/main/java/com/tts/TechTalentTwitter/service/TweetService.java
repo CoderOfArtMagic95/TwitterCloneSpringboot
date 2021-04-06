@@ -67,4 +67,36 @@ public class TweetService {
         }
         tweet.setTags(tags);
     }
+    
+    private List<Tweet> formatTweets(List<Tweet> tweets) {
+        addTagLinks(tweets);
+        shortenLinks(tweets);
+        return tweets;
+    }
+    //addTagLinks, shortenLinks takes in a list of tweets
+    //and changes the message for each one.
+    private void shortenLinks(List<Tweet> tweets) {
+        Pattern pattern = Pattern.compile("https?[^ ]+");
+        // iterate through the list and process each one
+        for(Tweet tweet: tweets) {
+        	/* extract the message from the tweet object,
+        	 * apply the regular expression to find all links,
+        	 * and then iterate through the found links one by one*/
+        	String message = tweet.getMessage();
+        	Matcher matcher = pattern.matcher(message);
+        	while(matcher.find()) {
+        	    String link = matcher.group();
+                
+        	    //For each link, we begin by shortening it if necessary
+        	    String shortenedLink = link;
+        	    if (link.length() > 23) {
+        	        shortenedLink = link.substring(0,20) + "...";
+        	    }
+        	    
+        	    message = message.replace(link, "<a class=\"tag\" href=\"" + link + 
+        	    		"\target=\"_blank\">" + shortenedLink + "</a>");
+            }
+            tweet.setMessage(message);
+        }
+    }
 }
