@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.tts.TechTalentTwitter.model.Tweet;
+import com.tts.TechTalentTwitter.model.TweetDisplay;
 import com.tts.TechTalentTwitter.model.User;
 import com.tts.TechTalentTwitter.service.TweetService;
 import com.tts.TechTalentTwitter.service.UserService;
@@ -32,7 +33,7 @@ public class TweetController {
      *  and will accept a GET request to either /tweets or /. */
     @GetMapping(value= {"/tweets", "/"})
     public String getFeed(Model model,boolean IsEmpty){
-        List<Tweet> tweets = tweetService.findAll();
+        List<TweetDisplay> tweets = tweetService.findAll();
         /* allow us to check for 'feed' if it is empty, 
          * newTweet.html */
         if(IsEmpty == true && model.equals(null)) {
@@ -69,7 +70,7 @@ public class TweetController {
     /*a method that is called whenever we make a GET request to /tweets/{tag}*/
     @GetMapping(value = "/tweets/{tag}")
     public String getTweetsByTag(@PathVariable(value="tag") String tag, Model model) {
-        List<Tweet> tweets = tweetService.findAllWithTag(tag);
+        List<TweetDisplay> tweets = tweetService.findAllWithTag(tag);
         model.addAttribute("tweetList", tweets);
         model.addAttribute("tag", tag);
         return "taggedTweets";
