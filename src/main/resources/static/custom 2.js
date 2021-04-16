@@ -10,4 +10,3 @@ $(document).ready(function() {
     $(this).addClass('btn-primary');
   });
 })
-

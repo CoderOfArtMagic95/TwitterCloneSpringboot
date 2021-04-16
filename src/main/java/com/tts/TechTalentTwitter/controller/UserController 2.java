@@ -9,8 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-//import com.tts.TechTalentTwitter.model.Tweet;
-import com.tts.TechTalentTwitter.model.TweetDisplay;
+import com.tts.TechTalentTwitter.model.Tweet;
 import com.tts.TechTalentTwitter.model.User;
 import com.tts.TechTalentTwitter.service.*;
 
@@ -29,7 +28,7 @@ public class UserController {
     	
       User loggedInUser = userService.getLoggedInUser();
       User user = userService.findByUsername(username);
-      List<TweetDisplay> tweets = tweetService.findAllByUser(user);
+      List<Tweet> tweets = tweetService.findAllByUser(user);
       /* In the UserController's getUser method, 
        *  add the following. We iterate through the
        *  list of users that are being followed by
@@ -71,7 +70,7 @@ public class UserController {
     	 *  list to the HashMap.*/
         HashMap<String,Integer> tweetCounts = new HashMap<>();
         for (User user : users) {
-            List<TweetDisplay> tweets = tweetService.findAllByUser(user);
+            List<Tweet> tweets = tweetService.findAllByUser(user);
             tweetCounts.put(user.getUsername(), tweets.size());
         }
         model.addAttribute("tweetCounts", tweetCounts);
